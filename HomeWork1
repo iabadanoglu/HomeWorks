@@ -1,0 +1,178 @@
+using System;
+using System.Collections.Generic;
+
+namespace HomeWork
+{
+    internal class HomeWork1
+    {
+        static void Main(string[] args)
+        {
+            string firstMessage = messages();
+
+            Console.WriteLine(firstMessage);
+            
+            int work = Convert.ToInt32(Console.ReadLine());
+
+            if (work == 1)
+            {
+                List<int> evenNumbers = new List<int>();
+                evenNumbers = HomeWork1Methods1.evenNumbers(evenNumbers);
+                HomeWork1Methods1.PrintList(evenNumbers);
+            }
+            else if (work == 2) HomeWork1Methods1.expectedNumbers();
+            else if (work == 3) HomeWork1Methods1.ReverseWords();
+            else if (work == 4) HomeWork1Methods1.WordCount();
+        }
+
+        static string messages()
+        {
+            string firstMessage =
+                "Below are four exercises you can do\n" +
+                "1 - Finding even numbers\n" +
+                "2 - Finding numbers in a list that are equal to a given number or divisible without a remainder\n" +
+                "3 - Sorting entered words in reverse\n" +
+                "4 - Finding the total number of words and total letters in a sentence\n" +
+                "\nPlease enter a number to select the exercise you want to do.";
+
+            return firstMessage;
+        }
+    }
+}
+
+public static class HomeWork1Methods1
+{
+    public static bool _isNumber(string _str, bool positive)
+    {
+        bool number = false;
+
+        if (_str.Length > 1 || _str == "")
+        {
+            number = false;
+        }
+
+        foreach (char chr in _str)
+        {
+            if (!Char.IsNumber(chr)) number = false;
+        }
+
+        if (positive)
+        {
+            int num = Convert.ToInt32(_str);
+            number = num > 0;
+        }
+
+        return number;
+    }
+
+
+    public static List<int> evenNumbers(this List<int> evenNums)
+    {
+        Console.WriteLine("It is desired to find even numbers from the numbers you entered. Please enter a number to indicate how many numbers you want to enter.");
+        //bool _num = HomeWork1Methods1._isNumber(Console.ReadLine().ToString(), true);
+        int num = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine("Please enter " + num + " positive numbers");
+
+        for (int i = 0; i < num; i++)
+        {
+            int _num = Convert.ToInt32(Console.ReadLine());
+            if (_num % 2 == 0) evenNums.Add(_num);
+        }
+
+        return evenNums;
+    }
+
+    public static void expectedNumbers()
+    {
+        List<int> expectedNums = new List<int>();
+
+        Console.WriteLine("It is desired to find out which of the numbers you entered is equal to another number you entered. Now enter a number to indicate how many numbers you want to enter.");
+        int numNums = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine("Now enter the number whose equality you want to check.");
+        int num = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine("Plesae enter " + numNums + " number whose equality you want to check.");
+        for (int i = 0; i < numNums; i++)
+        {
+            int _num = Convert.ToInt32(Console.ReadLine());
+            if (_num == num || _num %num == 0) expectedNums.Add(_num);
+        }
+
+        PrintList2(expectedNums, num);
+        //return evenNums;
+    }
+
+    public static void ReverseWords()
+    {
+        List<string> words = new List<string>();
+
+        Console.WriteLine("The words you enter will be sorted in reverse order. Please enter a number to indicate how many words you want to enter.");
+        int numWord = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine("Please enter the " + numWord + " words you want to be sorted in reverse order now.");
+        
+        for(int i = 0; i < numWord; i++)
+        {
+            string word = Console.ReadLine();
+            words.Add(word);
+        }
+
+        words.Reverse();
+
+        foreach (string word in words)
+            Console.WriteLine(word);
+    }
+
+    public static void WordCount()
+    {
+        Console.WriteLine("It is required to find the number of words and letters of a sentence you entered. \nPlease enter a sentence.");
+        string sentence= Console.ReadLine();
+
+        List<string> words = new List<string>();
+        
+        int numWord = sentence.Split(new char[] { ' ', '.', '?', ',', '!', ':', ';' },
+                             StringSplitOptions.RemoveEmptyEntries).Length;
+        Console.WriteLine("\nNumber of words in the sentence you entered: " + numWord);
+
+        string trimmedSentence = sentence.Replace(" ", String.Empty);
+        Console.WriteLine("\nNumber of letters in the sentence you entered: " + trimmedSentence.Length);
+    }
+
+    public static void PrintList(List<int> evenNums)
+    {
+        if(evenNums.Count == 0)
+        {
+            Console.WriteLine("\n All numbers you entered are odd numbers");
+            return;
+        }
+
+        string message = evenNums.Count > 1 ? "\n Double numbers you entered" : "\n Double number you entered";
+
+        Console.WriteLine(message);
+
+        Console.WriteLine("\nReverse order of the words you entered:");
+        foreach (int num in evenNums)
+        {
+            System.Console.WriteLine(num);
+        }
+    }
+
+    public static void PrintList2(List<int> expectedNums, int num)
+    {
+        if (expectedNums.Count == 0)
+        {
+            Console.WriteLine("\n There is no number equal to " + num + " or divisible by  without a remainder among the numbers you entered.");
+            return;
+        }
+
+        string message = expectedNums.Count > 1 ? "\n Numbers that are equal to 5 or divisible without a remainder" : "\n Number that is equal to 5 or divisible without a remainder";
+
+        Console.WriteLine(message);
+
+        foreach (int _num in expectedNums)
+        {
+            System.Console.WriteLine(_num);
+        }
+    }
+}
