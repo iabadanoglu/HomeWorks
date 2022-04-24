@@ -1,0 +1,113 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace Koleksiyonlar_Soru_2
+{
+    internal class Program
+    {
+        static float num;
+        static int firstEnd = 3;
+        static int numIndex = 0;
+        static int numCount = 10;
+        
+        static float[] nums = new float[numCount];
+        static float[] smallerThree=new float[firstEnd];
+        static float[] biggerThree = new float[firstEnd];
+
+        static void Main(string[] args)
+        {
+            RaedNumbers();
+        }
+
+        static void RaedNumbers()
+        {
+            bool b;
+            Console.WriteLine("Please enter 20 numbers");
+
+            for (int i = 0; i < numCount; i++)
+            {
+                string str = Console.ReadLine();
+                b = isNumber(str);
+
+                if (b)
+                {
+                    nums[numIndex] = float.Parse(str);
+                    numIndex++;
+                }
+            }
+
+            PrintArray();
+        }
+
+        static bool isNumber(string str)
+        {
+            try
+            {
+                num = float.Parse(str);
+                return true;
+            }
+            catch (FormatException)
+            {
+                numCount++;
+                Console.WriteLine("Please enter a positive number");
+                return false;
+            }
+        }
+
+        static void PrintArray()
+        {
+            Array.Sort(nums);
+
+            int smallerInd = 0;
+            int biggerInd = 0;
+
+            float sumSmallests = 0;
+            float sumBiggests = 0;
+
+            float avgSmallests = 0;
+            float avgBiggests = 0;
+
+            float sumSmallestAndBiggest = 0;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (i < 3)
+                {
+                    smallerThree[smallerInd] = nums[i];
+                    sumSmallests += nums[i];
+                    smallerInd++;
+                }
+                else if (i > nums.Length - firstEnd - 1)
+                {
+                    biggerThree[biggerInd] = nums[i];
+                    sumBiggests += nums[i];
+                    biggerInd++;
+                }
+            }
+
+            avgSmallests= sumSmallests / firstEnd;
+            avgBiggests = sumBiggests / firstEnd;
+            sumSmallestAndBiggest = avgSmallests + avgBiggests;
+
+            Console.WriteLine("\n----------------- Three smallest number ------------------");
+
+            for (int i = 0; i < smallerThree.Length; i++)
+            {
+                Console.WriteLine(smallerThree[i]);
+            }
+
+            Console.WriteLine("\nThe avarage of three smallest number: " + avgSmallests);
+
+            Console.WriteLine("\n------------------ Three biggest number -------------------");
+            for (int i = 0; i < smallerThree.Length; i++)
+            {
+                Console.WriteLine(biggerThree[i]);
+            }
+
+            Console.WriteLine("\nThe avarage of three biggest number: " + avgBiggests);
+
+            Console.WriteLine("\nThe sum of the mean of the three smallest and largest numbers: " + sumSmallestAndBiggest);
+        }
+    }
+}
