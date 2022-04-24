@@ -1,0 +1,109 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace Koleksiyonlar_Soru_1
+{
+    internal class Program
+    {
+        static int numInt;
+        static int numAllNumbers = 5;
+        static ArrayList primeNums=new ArrayList();
+        static ArrayList nonPrimeNums = new ArrayList();
+        static void Main(string[] args)
+        {
+            Numbers();
+        }
+
+        static void Numbers()
+        {
+            bool isPositiveNum, isPrimeNum;
+            string str = "";
+            Console.WriteLine("Please enter 20 positive number");
+
+            for(int i = 0; i < numAllNumbers; i++)
+            {
+                str = Console.ReadLine();
+
+                isPositiveNum = isPositiveNumber(str);
+                if(isPositiveNum)
+                {
+                    numInt = Convert.ToInt32(str);
+                    isPrimeNum = isPrimeNumber(numInt);
+
+                    if (isPrimeNum) primeNums.Add(numInt);
+                    else nonPrimeNums.Add(numInt);
+                }
+            }
+
+            PrintArrays();
+        }
+
+        static bool isPositiveNumber(string str)
+        {
+            bool positiveNum;
+            try
+            {
+                int n = Convert.ToInt32(str);
+                positiveNum = true;
+            }
+            catch (FormatException)
+            {
+                positiveNum = false;
+                numAllNumbers++;
+                Console.WriteLine("Please enter a positive number");
+            }
+
+            return positiveNum;
+        }
+
+        static bool isPrimeNumber(int num)
+        {
+            int numCount = 0;
+
+            for (int i = 2; i < num; i++)
+            {
+                if (num % i == 0)
+                    numCount++;
+            }
+
+            if (numCount > 0)
+                return false;
+            else
+                return true;
+        }
+
+        static void PrintArrays()
+        {
+            primeNums.Sort();
+            primeNums.Reverse();
+
+            nonPrimeNums.Sort();
+            nonPrimeNums.Reverse();
+
+            Console.WriteLine("\n------------------------ Prime Numbers --------------------------------\n");
+            float sumOfPrimeNums = 0;
+
+            foreach (int i in primeNums)
+            {
+                sumOfPrimeNums += (float)i;
+                Console.WriteLine(i);
+            }
+
+            Console.WriteLine("\nnumber of elements of the Prime Numbers array: " + primeNums.Count);
+            Console.WriteLine("\naverage of array elements : " + (sumOfPrimeNums / (float)primeNums.Count));
+
+            Console.WriteLine("\n---------------------- non Prime Numbers -------------------------------\n");
+            float sumOfNonPrimeNums = 0;
+
+            foreach (int i in nonPrimeNums)
+            {
+                sumOfNonPrimeNums += (float)i;
+                Console.WriteLine(i);
+            }
+
+            Console.WriteLine("\nnumber of elements of the Prime Numbers array: " + nonPrimeNums.Count);
+            Console.WriteLine("\naverage of array elements : " + (sumOfNonPrimeNums / (float)nonPrimeNums.Count));
+        }
+    }
+}
