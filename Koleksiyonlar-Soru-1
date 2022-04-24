@@ -7,7 +7,7 @@ namespace Koleksiyonlar_Soru_1
     internal class Program
     {
         static int numInt;
-        static int numAllNumbers = 5;
+        static int numAllNumbers = 20;
         static ArrayList primeNums=new ArrayList();
         static ArrayList nonPrimeNums = new ArrayList();
         static void Main(string[] args)
